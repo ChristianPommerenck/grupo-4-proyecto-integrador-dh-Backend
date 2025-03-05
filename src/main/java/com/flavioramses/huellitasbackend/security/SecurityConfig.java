@@ -1,5 +1,6 @@
 package com.flavioramses.huellitasbackend.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,21 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        // Permite solicitudes CORS desde tu frontend (http://localhost:5173)
-        registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173","https://grupo-4-proyecto-integrador-dh-frontend-1dsq.vercel.app/")  // Cambia esto si tu frontend está en otro puerto
-                .allowedMethods("GET", "POST", "PUT", "DELETE")  // Métodos permitidos
-                .allowedHeaders("*");  // Permitir cualquier tipo de cabecera
-    }
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,6 +35,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        // Spring will inject the JwtTokenProvider here
         return new JwtAuthenticationFilter(jwtTokenProvider());
     }
 
@@ -62,5 +53,5 @@ public class SecurityConfig implements WebMvcConfigurer {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-}
 
+}

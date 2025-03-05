@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:5173","https://grupo-4-proyecto-integrador-dh-frontend-1dsq.vercel.app/"})
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
