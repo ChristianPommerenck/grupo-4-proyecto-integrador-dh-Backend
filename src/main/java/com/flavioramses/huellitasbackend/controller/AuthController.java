@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:5173","https://grupo-4-proyecto-integrador-dh-frontend-1dsq.vercel.app/"})
 @RestController
@@ -59,11 +60,16 @@ public class AuthController {
                     )
             );
 
+            Optional<Usuario> usuarioLogin = usuarioService.getUsuarioByEmail(loginRequest.getEmail());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtTokenProvider.generateToken(authentication);
 
             Map<String, String> response = new HashMap<>();
             response.put("jwt", jwt);
+            response.put("nombre", usuarioLogin.get().getNombre());
+            response.put("apellido", usuarioLogin.get().getApellido());
+            response.put("email", usuarioLogin.get().getEmail());
+
 
             return ResponseEntity.ok(response);
 
