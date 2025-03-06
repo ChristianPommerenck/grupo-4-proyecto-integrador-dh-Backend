@@ -20,11 +20,11 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        // Permite solicitudes CORS desde tu frontend (http://localhost:5173)
-        registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173","https://grupo-4-proyecto-integrador-dh-frontend-1dsq.vercel.app/")  // Cambia esto si tu frontend está en otro puerto
-                .allowedMethods("GET", "POST", "PUT", "DELETE")  // Métodos permitidos
-                .allowedHeaders("*");  // Permitir cualquier tipo de cabecera
+        registry.addMapping("/**") // Permitir acceso a todas las rutas
+                .allowedOrigins("http://localhost:5173") // Origen del frontend
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
+                .allowedHeaders("Authorization", "Content-Type") // Encabezados permitidos
+                .allowCredentials(true); // Permitir credenciales (cookies, cabeceras, etc.)
     }
 
     @Bean
